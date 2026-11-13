@@ -2,7 +2,7 @@
 
 **Proyecto:** HARNESS0.1  
 **Versión:** 0.1  
-**Estado:** Diseño futuro, no implementado
+**Estado:** Arquitectura conceptual; primer subconjunto implementado en el MVP local
 
 > Este documento propone responsabilidades lógicas para el núcleo. Los componentes pueden compartir proceso, almacenamiento o despliegue; separarlos en servicios independientes solo se justificará por necesidades verificadas de escala, aislamiento, operación o evolución. Las políticas aquí descritas no son controles técnicos presentes.
 
@@ -21,6 +21,10 @@ Principios de diseño:
 - Escalar de un núcleo modular a servicios separados solo con evidencia de necesidad.
 
 ## 2. Componentes lógicos
+
+### Implementación actual del MVP
+
+El paquete harness/ implementa Task Manager, Orchestrator, Agent Runtime, interfaz ModelProvider con MockProvider, Tool Engine, Permission Manager básico, Verification Engine y Memory Engine SQLite. Estos módulos son componentes lógicos dentro de un solo proceso Python; no son servicios independientes. Logging se representa por eventos estructurados en SQLite, no por una plataforma de observabilidad. Context Manager y Memory Manager semántico no existen; el estado y la memoria persistente se limitan a tareas e historial operativo. Esta implementación cubre solo la capacidad local descrita en README.md.
 
 | Componente | Responsabilidad | Entradas | Salidas y relaciones |
 |---|---|---|---|
@@ -51,7 +55,7 @@ Un componente puede invocar directamente otro mediante interfaz local en la prim
 
 ## 4. Límites, fallos y seguridad
 
-Los componentes documentados no son funcionalidades actuales. Autorización, identidad, aislamiento, retención y auditoría deberán tener mecanismos implementados y comprobables antes de usarse en operaciones reales. El agente no puede llamar a una herramienta saltándose el punto de permiso. Si el servicio de permisos o el estado confiable no está disponible, las acciones con efectos se deniegan de forma segura. Lecturas independientes solo continúan si la política lo permite.
+Los componentes no listados como implementados siguen siendo conceptuales. El MVP sí valida el permiso declarado antes de cada herramienta local y verifica las rutas del workspace, pero no provee identidad, aislamiento de proceso, almacenamiento inmutable o controles suficientes para operaciones empresariales. En la implementación futura, si el servicio de permisos o el estado confiable no está disponible, las acciones con efectos deberán denegarse de forma segura.
 
 Los errores deben propagarse como resultado explícito con correlación a encargo y paso; reintentos requieren evaluación de idempotencia o reconciliación. La pérdida de contexto o incertidumbre del efecto debe marcarse, no ocultarse.
 

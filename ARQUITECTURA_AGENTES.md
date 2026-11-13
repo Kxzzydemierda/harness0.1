@@ -2,13 +2,17 @@
 
 **Proyecto:** HARNESS0.1  
 **Versión:** 0.1  
-**Estado:** Especificación futura; agentes HARNESS aún no implementados
+**Estado:** Especificación conceptual; runtime de un agente lógico implementado con proveedor simulado
 
 ## 1. Definición
 
 Un **agente** es una unidad lógica de trabajo configurada para interpretar un objetivo, usar contexto autorizado y proponer o ejecutar acciones dentro de límites definidos. Un agente no equivale a un modelo de inteligencia artificial: el modelo genera inferencias o respuestas; el agente añade instrucciones, identidad lógica, contexto, herramientas, permisos, ciclo de ejecución, memoria permitida y verificación. Tampoco equivale al runtime, al orquestador ni a HARNESS CORE, que proporcionaría el entorno de ejecución y coordinación.
 
-La existencia de agentes especializados es parte de la visión de automatización empresarial integral de HARNESS0.1, no una capacidad actualmente disponible.
+La existencia de agentes especializados es parte de la visión de automatización empresarial integral de HARNESS0.1. El MVP cuenta con un solo Agent Runtime y MockProvider determinista; no implementa múltiples agentes ni conexión a un modelo externo.
+
+## Implementación actual
+
+AgentRuntime recibe una tarea, solicita análisis y plan a ModelProvider y devuelve llamadas de herramienta estructuradas. MockProvider solo acepta una tarea sencilla de creación de archivo de texto. Tool Engine ejecuta la operación real y Permission Manager comprueba el permiso declarado. Este agente no posee identidad autenticada, memoria propia, delegación ni capacidades generales de razonamiento.
 
 ## 2. Definición y configuración
 

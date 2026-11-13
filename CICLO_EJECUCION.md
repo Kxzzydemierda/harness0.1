@@ -2,7 +2,7 @@
 
 **Proyecto:** HARNESS0.1  
 **Versión:** 0.1  
-**Estado:** Especificación conceptual; no implementada
+**Estado:** Especificación documental; flujo parcial implementado en el MVP local
 
 > Define el flujo que conecta recepción y entrega. Sus etapas son un proceso lógico y no implican servicios ya existentes. AGENTS.md fija la jerarquía y los límites; PROTOCOLO_ENCARGOS.md define la entidad y sus estados; PROTOCOLO_ENTREGAS.md define el informe final.
 
@@ -10,7 +10,7 @@
 
 Cada ejecución pertenece a un encargo identificado, conserva su alcance y permisos, y produce evidencia suficiente para evaluar el resultado. La autonomía es alta dentro de las autorizaciones vigentes. El agente no amplía el objetivo ni interpreta silencio como permiso. Un cambio material de alcance vuelve a análisis y puede requerir nueva aprobación.
 
-Las etapas no son necesariamente procesos separados ni deben mapearse uno a uno con los estados del encargo. Un estado describe situación; una etapa describe trabajo lógico.
+Las etapas no son necesariamente procesos separados ni deben mapearse uno a uno con los estados del encargo. Un estado describe situación; una etapa describe trabajo lógico. El MVP conecta análisis, planificación, ejecución, verificación y entrega en un único proceso local; recepción se realiza por la CLI y asignación está fija a un agente lógico. No implementa colas, reintentos automáticos ni persistencia transaccional de cada etapa.
 
 ## 2. Etapas
 
@@ -49,12 +49,12 @@ La intervención es obligatoria en los casos de autorización enumerados en AGEN
 
 Conceptualmente debe conservarse, por ejecución: ID y versión del encargo; estado y etapa actuales; responsable; tiempos; plan y cambios justificados; decisiones y aprobaciones referenciadas; pasos ejecutados; resultados; errores y reintentos; evidencias; criterios; y vínculo a la entrega. Cada transición debe llevar actor, motivo y fecha lógica. El registro de cambios debe permitir reconstruir el estado sin sobrescribir hechos anteriores.
 
-La tecnología de persistencia, retención, control de concurrencia, consistencia frente a fallos y protección contra alteración son decisiones pendientes de HARNESS CORE. Este documento no afirma que exista una base de datos o un historial automático.
+El MVP persiste tareas, planes, resultados, ejecuciones y eventos en SQLite. No ofrece historial inmutable, control de concurrencia de ejecuciones, recuperación transaccional completa, retención configurable ni protección contra alteración; esos aspectos siguen pendientes.
 
 ## 7. Finalización
 
 El ciclo termina cuando se comunica una entrega válida y el encargo alcanza un estado final según PROTOCOLO_ENCARGOS.md. Una entrega bloqueada o parcialmente exitosa es un cierre informativo, no una declaración de éxito. Una continuación crea una nueva ejecución vinculada o reabre mediante regla explícita futura, revalidando permisos, entradas y criterios.
 
-## 8. Coherencia documental pendiente
+## 8. Coherencia documental y decisiones pendientes
 
-README.md conserva una lista titulada “Estructura actual del repositorio” que no incluye PROTOCOLO_ENCARGOS.md ni los documentos añadidos en esta fase. Se deja intacto por la instrucción de conservar originales. En una tarea autorizada deberá actualizarse ese inventario para reflejar los archivos reales, sin describirlos como componentes implementados.
+README.md se actualizó para reflejar el árbol actual y separar el código funcional de las capacidades aspiracionales. El inventario debe actualizarse cuando cambie la estructura. La persistencia actual cubre el MVP local, no los requisitos empresariales de auditoría o disponibilidad.

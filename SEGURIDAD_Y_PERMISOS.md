@@ -2,9 +2,9 @@
 
 **Proyecto:** HARNESS0.1  
 **Versión:** 0.1  
-**Estado:** Política conceptual; controles técnicos futuros
+**Estado:** Política conceptual; comprobación técnica básica para herramientas locales implementada
 
-> Este documento define objetivos y reglas de diseño. No es una barrera técnica ni prueba que los controles existan. AGENTS.md establece la jerarquía, autonomía y autorizaciones humanas generales; PROTOCOLO_ENCARGOS.md aplica esos límites al encargo.
+> Este documento define objetivos y reglas de diseño. El MVP comprueba permisos explícitos antes de sus herramientas locales y confina rutas al workspace; esto no implementa identidad autenticada, aislamiento de procesos, gestor de secretos ni controles empresariales. AGENTS.md establece la jerarquía, autonomía y autorizaciones humanas generales; PROTOCOLO_ENCARGOS.md aplica esos límites al encargo.
 
 ## 1. Objetivo y modelo de confianza
 
@@ -46,7 +46,7 @@ Ante sospecha de acceso no autorizado, fuga, acción fuera de alcance o integrid
 
 ## 8. Límites documentales frente a controles técnicos
 
-Estas reglas requieren implementación y pruebas antes de tratarse como barreras efectivas. Capacidades técnicas futuras pueden incluir autenticación, autorización centralizada, aislamiento, gestor de secretos, cifrado, registros protegidos, retención y respuesta a incidentes; aquí no se afirma que existan ni se elige una tecnología. La documentación sola no impide una acción insegura.
+Las reglas generales requieren implementación y pruebas antes de tratarse como barreras efectivas. En el MVP, los permisos de tarea limitan las herramientas locales incluidas y las rutas se validan dentro del workspace; la aprobación solo se registra como pendiente y no hay mecanismo seguro para concederla desde la CLI. No se implementan autenticación, autorización centralizada empresarial, aislamiento de procesos, gestor de secretos, cifrado ni respuesta a incidentes. La documentación y estos controles básicos no bastan para operaciones empresariales reales.
 
 ## 9. Decisiones pendientes
 

@@ -2,13 +2,13 @@
 
 **Proyecto:** HARNESS0.1  
 **Versión:** 0.1  
-**Estado:** Diseño conceptual; no implementado
+**Estado:** Política conceptual; persistencia operativa limitada implementada con SQLite
 
 ## 1. Propósito y distinciones
 
 La memoria conserva información seleccionada para uso futuro; el contexto es la información reunida para una tarea o interacción concreta. El historial registra eventos de ejecución. El conocimiento compartido es información autorizada para consulta por más de un agente. No son sinónimos ni todo dato de contexto debe convertirse en memoria persistente.
 
-HARNESS0.1 aspira a coordinar procesos empresariales mediante agentes especializados; el uso de memoria debe facilitar continuidad sin acumular indiscriminadamente información sensible, obsoleta o innecesaria. Este documento no afirma que exista almacenamiento o recuperación implementados.
+HARNESS0.1 aspira a coordinar procesos empresariales mediante agentes especializados; el uso de memoria debe facilitar continuidad sin acumular indiscriminadamente información sensible, obsoleta o innecesaria. El MVP persiste encargos, estados, planes, ejecuciones, resultados y eventos de auditoría en SQLite. No implementa memoria semántica, embeddings, recuperación de conocimiento compartido ni políticas automáticas de retención y eliminación.
 
 ## 2. Clases de información
 

@@ -4,7 +4,7 @@
 **Versión:** 0.1  
 **Estado:** Propuesta documental inicial
 
-> Este documento define un estándar operativo para describir, analizar y gestionar encargos. Es una especificación documental: no implementa validadores, controles técnicos, almacenamiento de estados ni mecanismos de autorización. HARNESS CORE se considera una implementación futura.
+> Este documento define un estándar operativo para describir, analizar y gestionar encargos. El MVP implementa validaciones básicas, transiciones de estado, persistencia SQLite y comprobación de permisos para un conjunto limitado de herramientas locales; no implementa el estándar completo ni controles técnicos empresariales.
 
 ## 1. Propósito del protocolo
 
@@ -22,7 +22,7 @@ Cada encargo debe expresar los campos obligatorios antes de comenzar su ejecuci�
 
 | Campo | Requisito | Contenido esperado |
 |---|---|---|
-| **Identificador único** | Obligatorio | Identificador estable y no reutilizable dentro del ámbito de HARNESS0.1. Se recomienda la convención **ENC-AAAA-NNNN**; el mecanismo que garantiza unicidad queda pendiente de HARNESS CORE o del registro que se defina. |
+| **Identificador único** | Obligatorio | Identificador estable y no reutilizable en el registro activo. El MVP usa **ENC-AAAA-NNNN**, con secuencia anual almacenada en su base SQLite; la unicidad global entre bases independientes queda pendiente. |
 | **Título** | Obligatorio | Nombre breve que permita reconocer el encargo. |
 | **Descripción** | Obligatorio | Explicación clara de la solicitud, sin depender de instrucciones implícitas. |
 | **Objetivo principal** | Obligatorio | Resultado que se busca conseguir, expresado como un cambio, decisión, análisis o producto verificable. Debe distinguirse de los pasos propuestos para alcanzarlo. |
@@ -46,7 +46,7 @@ Cada encargo debe expresar los campos obligatorios antes de comenzar su ejecuci�
 
 ## 3. Ciclo de vida del encargo
 
-El estado describe la situación actual del encargo. Cada cambio de estado debe poder justificarse con un motivo y, cuando corresponda, con evidencia, responsable y siguiente condición de avance. El registro técnico e inmutable de esos eventos es una decisión de implementación futura.
+El estado describe la situación actual del encargo. Cada cambio debe poder justificarse con un motivo y, cuando corresponda, evidencia, responsable y condición de avance. El MVP registra transiciones y eventos en SQLite, pero no garantiza inmutabilidad, identidad autenticada ni historial a prueba de alteración.
 
 | Estado | Significado y condición para salir |
 |---|---|
@@ -115,10 +115,10 @@ La verificación se registra por criterio como **Cumple**, **No cumple** o **No 
 | Componente | Responsabilidad y relación con este protocolo |
 |---|---|
 | **AGENTS.md** | Define la identidad y las reglas operativas generales de los agentes, la jerarquía de instrucciones, la autonomía, los límites de autorización y los principios de verificación y entrega. Este protocolo concreta cómo esas reglas se aplican al recibir y definir un encargo; no las sustituye. |
-| **README.md** | Expone la visión, objetivos, filosofía, áreas empresariales y arquitectura conceptual de HARNESS0.1, además del estado actual del proyecto. Este protocolo convierte parte de esa visión en un contrato documental de trabajo sin afirmar que ya exista automatización implementada. |
+| **README.md** | Expone la visión, objetivos, filosofía, áreas empresariales, arquitectura conceptual y estado del MVP de HARNESS0.1. Este protocolo define el contrato del encargo sin implicar automatización empresarial integral. |
 | **PROTOCOLO_ENCARGOS.md** | Establece los campos de definición, el análisis previo, los estados, las transiciones y los criterios para determinar si un encargo puede ejecutarse y cuándo puede considerarse completado. |
-| **PROTOCOLO_ENTREGAS.md (futuro)** | Deberá especificar el formato, contenido y organización de los informes y evidencias de entrega. Hasta que exista, se aplica el requisito de entrega establecido en **AGENTS.md**; este protocolo no inventa ni reemplaza ese formato futuro. |
-| **HARNESS CORE (futuro)** | Podrá implementar el registro de encargos, validación de campos, control de estados, asociación de agentes y aplicación técnica de permisos y aprobaciones. Esos mecanismos no se consideran disponibles por el hecho de estar descritos aquí. |
+| **PROTOCOLO_ENTREGAS.md** | Define el contenido y la validez documental de los informes. El agente aplica ese formato al comunicar resultados; este protocolo decide cuándo se analiza, ejecuta y verifica el encargo. |
+| **HARNESS CORE** | El MVP implementa creación de tareas, estados básicos, ejecución con un agente, permisos de herramientas locales y verificación limitada. No implementa asignación múltiple, aprobación segura, automatización general ni los controles empresariales descritos como objetivo. |
 
 ## 9. Ejemplo de encargo
 
@@ -126,7 +126,7 @@ El siguiente ejemplo es **hipotético**. Ilustra cómo completar los campos para
 
 ### Identificación y solicitud
 
-- **Identificador único:** ENC-2026-0001 (asignado y comprobado como no utilizado en el registro disponible).
+- **Identificador único:** ENC-2026-9001 (valor ilustrativo; no corresponde a una tarea registrada).
 - **Título:** Preparar un borrador del resumen mensual de ventas por canal.
 - **Descripción:** Consolidar las ventas del periodo indicado a partir de un extracto interno y preparar un resumen para revisión del área de ventas.
 - **Objetivo principal:** Entregar un borrador verificable con los totales por canal, el total general y las discrepancias encontradas.
@@ -153,13 +153,11 @@ El siguiente ejemplo es **hipotético**. Ilustra cómo completar los campos para
 
 Este protocolo puede usarse como estándar documental, pero HARNESS0.1 todavía requiere decisiones de diseño antes de automatizar su aplicación. Entre ellas:
 
-- Dónde se registra y cómo se garantiza la unicidad de los identificadores.
-- Qué formato de datos y validaciones utilizará HARNESS CORE.
-- Cómo se conservarán el historial de estados, las evidencias y los responsables de cada transición.
+- Cómo evitar colisiones si varias bases SQLite independientes crean encargos en el mismo año.
+- Qué esquema versionado y validaciones completas adoptará HARNESS CORE más allá de las comprobaciones básicas del MVP.
+- Cómo proteger el historial contra alteraciones y representar responsables autenticados de cada transición.
 - Qué roles pueden aprobar cada tipo de acción y cómo se registra una aprobación vigente.
-- Cómo se asignan prioridades, plazos y reglas de escalamiento.
-- Cómo se integrará el ciclo de encargo con PROTOCOLO_ENTREGAS.md cuando ese documento futuro se defina.
-
-- La lista de estructura en README.md corresponde al esqueleto previo; deberá actualizarse en una tarea autorizada para incluir este protocolo, ya que este encargo limita los cambios a este archivo.
+- Cómo se formalizarán roles aprobadores, vigencia de autorizaciones y opciones de reanudación tras una aprobación.
+- Cómo se asignarán plazos y reglas de escalamiento; la prioridad actual solo se almacena y no dirige la planificación.
 
 Estas decisiones no se presuponen resueltas ni se atribuyen a funcionalidades existentes.
