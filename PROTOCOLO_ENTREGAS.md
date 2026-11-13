@@ -21,7 +21,8 @@ El informe contiene:
 | Campo | Contenido |
 |---|---|
 | Identificador y título del encargo | ID y nombre conforme al encargo; señalar si el ID es provisional. |
-| Estado final | COMPLETADO, FALLIDO, CANCELADO o BLOQUEADO/PARCIALMENTE COMPLETADO cuando el trabajo no alcanza cierre exitoso, de acuerdo con el protocolo de encargos. No llamar COMPLETADO a lo no verificado. |
+| Estado del encargo | Registrar un estado definido por PROTOCOLO_ENCARGOS.md, como COMPLETADO, FALLIDO, CANCELADO o BLOQUEADO. BLOQUEADO indica espera y no es terminal; un estado no terminal se presenta como cierre informativo. |
+| Clasificación de la entrega | EXITOSA, PARCIALMENTE EXITOSA, FALLIDA o BLOQUEADA, según los resultados y la evidencia; no sustituye el estado del encargo. |
 | Objetivo y resumen | Resultado buscado y resumen factual de lo ejecutado. |
 | Archivos y artefactos | Rutas creadas, modificadas o eliminadas; indicar “ninguno” si aplica. No exponer datos sensibles en el informe. |
 | Evidencias | Referencias reproducibles a observaciones, registros, capturas, cálculos o salidas pertinentes; distinguir evidencia disponible de inferencia. |
