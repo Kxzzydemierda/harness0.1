@@ -1,7 +1,8 @@
 # Entrega 002 — Evaluación de disponibilidad de Hermes
 
 **Identificador relacionado:** 002-prueba-hermes (solicitud de evaluación; encargo ejecutable no creado)  
-**Estado final:** BLOQUEADA  
+**Estado del encargo:** BLOQUEADO  
+**Clasificación de la entrega:** BLOQUEADA  
 **Resultado de la prueba:** NO EJECUTADA; Hermes no disponible en las interfaces inspeccionadas  
 **Fecha de comprobación:** 2026-11-13
 
